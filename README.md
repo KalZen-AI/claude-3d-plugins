@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a href="#plugins">Plugins</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<a href="#how-it-works">How It Works</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<a href="LICENSE">License</a>
+  <a href="#plugins">Plugins</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<a href="#getting-started">Getting Started</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<a href="#how-it-works">How It Works</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<a href="CONNECTORS.md">Connectors</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;<a href="LICENSE">License</a>
 </p>
 
 ---
@@ -34,13 +34,13 @@ These plugins generate 3D models through [UnrealizeX](https://unrealizex.com). Y
 
 ### Claude Code
 
-Add this marketplace and install the plugin you want:
+**Step 1 — Add the marketplace:**
 
 ```shell
 /plugin marketplace add KalZen-AI/claude-3d-plugins
 ```
 
-Then browse and install plugins:
+**Step 2 — Install a plugin:**
 
 ```shell
 /plugin install 3d-websites@claude-3d-plugins
@@ -48,7 +48,15 @@ Then browse and install plugins:
 
 Or open the plugin manager with `/plugin`, go to the **Discover** tab, and install from there.
 
+**Step 3 — Connect to UnrealizeX:**
+
+The MCP server is pre-configured in the plugin's `.mcp.json` — no manual setup needed. The first time Claude calls an UnrealizeX tool, an OAuth login will open in your browser. Sign in (or create a free account) and you're connected.
+
+> Run `/[plugin-name]:setup` after installing to walk through the full setup interactively.
+
 ### Claude Cowork
+
+**Step 1 — Add the marketplace:**
 
 1. Open the Claude desktop app and switch to the **Cowork** tab
 2. Click **Customize** in the left sidebar
@@ -59,6 +67,36 @@ Or open the plugin manager with `/plugin`, go to the **Discover** tab, and insta
    https://github.com/KalZen-AI/claude-3d-plugins.git
    ```
 6. Browse the marketplace and install the plugins you want
+
+**Step 2 — Connect to UnrealizeX:**
+
+1. Go to **Settings → Connectors**
+2. Click **Add custom connector**
+3. Paste the server URL: `https://unrealizex.com/mcp/`
+4. Authenticate with your UnrealizeX account (or [create a free one](https://unrealizex.com))
+
+> Run `/[plugin-name]:setup` after installing to walk through the full setup interactively.
+
+### One-time setup vs. ongoing usage
+
+```
+┌─────────────────────────────────────┐
+│         ONE-TIME SETUP              │
+│                                     │
+│  1. Add marketplace                 │
+│  2. Install plugin(s)              │
+│  3. Connect to UnrealizeX (OAuth)   │
+│  4. Run /plugin-name:setup          │
+└──────────────┬──────────────────────┘
+               │
+               ▼
+┌─────────────────────────────────────┐
+│         ONGOING USAGE               │
+│                                     │
+│  Just describe what you want.       │
+│  Claude + plugin handle the rest.   │
+└─────────────────────────────────────┘
+```
 
 ## How It Works
 
@@ -82,9 +120,11 @@ Each plugin adds **domain-specific knowledge** on top of the UnrealizeX pipeline
 claude-3D-plugins/
 ├── .claude-plugin/marketplace.json    # plugin registry
 ├── .mcp.json                          # root MCP config
+├── CONNECTORS.md                      # connector reference
 ├── 3d-websites/                       # per-plugin folders
 │   ├── .claude-plugin/plugin.json
 │   ├── .mcp.json
+│   ├── skills/setup/SKILL.md          # first-run setup skill
 │   └── README.md
 ├── product-studio/
 ├── game-assets/
