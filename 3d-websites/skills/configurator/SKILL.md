@@ -39,7 +39,7 @@ Each mesh has its own material, so colors/textures can be swapped independently.
 
 Options:
 1. **Re-export from 3D tool** — separate the model into named parts in Blender and re-export
-2. **Generate with UnrealizeX** — use `/3d-websites:generate` to create a base model, then generate texture variants with `start_texturing` using different style prompts
+2. **Generate with UnrealizeX** — use `/3d-websites:generate-3d` to create a base model, then generate texture variants with `start_texturing` using different style prompts
 3. **Material-only config** — even without named parts, you can swap the material on the entire model (color, roughness, metalness)
 
 ## Architecture
@@ -146,7 +146,7 @@ function getConfigurableParts(model) {
 
 For more dramatic variant differences (full texture changes, not just color), use UnrealizeX:
 
-1. Generate the base model with `/3d-websites:generate`
+1. Generate the base model with `/3d-websites:generate-3d`
 2. After the base texture is done, call `start_texturing` again with different style prompts:
    - "ocean blue colorway with white stitching"
    - "all-black stealth edition"
@@ -352,6 +352,6 @@ function calculatePrice(config, basePrice = 120) {
 Suggest next steps:
 
 - **`/3d-websites:landing-page`** — wrap the configurator in a product page with specs and CTAs
-- **`/3d-websites:generate`** — create texture variants via UnrealizeX for full-texture swaps
+- **`/3d-websites:generate-3d`** — create texture variants via UnrealizeX for full-texture swaps
 
 See [examples.md](examples.md) for a complete configurator example.

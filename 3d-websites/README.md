@@ -38,10 +38,10 @@ See [CONNECTORS.md](../CONNECTORS.md) for details.
 | Skill | Description |
 |-------|-------------|
 | `setup` | First-time setup — connects to UnrealizeX and walks through prerequisites |
-| `generate` | Generate 3D — create a web-optimized 3D model from a text description via the full UnrealizeX pipeline |
+| `generate-3d` | Generate 3D — create a web-optimized 3D model from a text description via the full UnrealizeX pipeline |
 | `export` | Download models from UnrealizeX to your local project with auto-detected paths |
 | `viewer` | Create an interactive 3D model viewer — vanilla Three.js, React Three Fiber, or `<model-viewer>` |
-| `scene` | 3D Scene — compose multiple models into an interactive scene with lighting and camera systems |
+| `3d-scene` | 3D Scene — compose multiple models into an interactive scene with lighting and camera systems |
 | `landing-page` | Build a complete 3D landing page with hero section, copy, CTAs, and responsive layout |
 | `scroll-scene` | Create scroll-driven 3D storytelling — camera fly-throughs, model reveals, scroll animations |
 | `configurator` | Build a 3D product configurator with real-time color, material, and variant switching |
@@ -52,21 +52,21 @@ See [CONNECTORS.md](../CONNECTORS.md) for details.
                      setup
                        │
                        ▼
-                    generate ──────────────┐
+                  generate-3d ─────────────┐
                        │                   │
                        ▼                   │
                      export          (user has model)
                        │                   │
           ┌────────────┼───────────────────┤
           ▼            ▼            ▼      ▼
-       viewer        scene     landing   scroll     configurator
+       viewer      3d-scene    landing   scroll     configurator
                                -page     -scene
 ```
 
 **Typical paths:**
 
-- **Product launch**: `generate` → `export` → `landing-page`
-- **Product showcase**: `generate` → `export` → `configurator`
-- **Portfolio piece**: `generate` → `export` → `scroll-scene`
-- **Model gallery**: `generate` (multiple) → `export` → `scene`
-- **Quick embed**: `generate` → `export` → `viewer`
+- **Product launch**: `generate-3d` → `export` → `landing-page`
+- **Product showcase**: `generate-3d` → `export` → `configurator`
+- **Portfolio piece**: `generate-3d` → `export` → `scroll-scene`
+- **Model gallery**: `generate-3d` (multiple) → `export` → `3d-scene`
+- **Quick embed**: `generate-3d` → `export` → `viewer`

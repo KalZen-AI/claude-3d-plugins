@@ -159,4 +159,4 @@ Suggest next steps:
 
 - **`/3d-websites:landing-page`** — wrap the scene in a full page with copy and navigation
 - **`/3d-websites:scroll-scene`** — add scroll-driven camera movement through the scene
-- **`/3d-websites:generate`** — create additional models to add to the scene
+- **`/3d-websites:generate-3d`** — create additional models to add to the scene

@@ -305,7 +305,7 @@ Scroll-driven 3D is performance-intensive on mobile. Adapt:
 Suggest next steps:
 
 - **`/3d-websites:landing-page`** — add traditional HTML sections before/after the scroll experience
-- **`/3d-websites:generate`** — create additional models to reveal during the scroll
-- **`/3d-websites:scene`** — compose the multi-model scene that the scroll drives through
+- **`/3d-websites:generate-3d`** — create additional models to reveal during the scroll
+- **`/3d-websites:3d-scene`** — compose the multi-model scene that the scroll drives through
 
 See [reference.md](reference.md) for GSAP ScrollTrigger patterns, Lenis setup, and scroll-to-animation mapping formulas.

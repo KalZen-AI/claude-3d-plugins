@@ -145,7 +145,7 @@ Apply one of these presets based on the model's intended look:
 Suggest next steps based on what the user might need:
 
 - **`/3d-websites:landing-page`** — wrap the viewer in a full page with copy and CTAs
-- **`/3d-websites:scene`** — if they want to show multiple models together
+- **`/3d-websites:3d-scene`** — if they want to show multiple models together
 - **`/3d-websites:scroll-scene`** — if they want scroll-driven camera movement
 - **`/3d-websites:configurator`** — if the model should have swappable colors/materials
 

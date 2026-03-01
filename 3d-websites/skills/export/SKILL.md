@@ -103,6 +103,6 @@ This is useful for galleries, configurators, or any page that loads models from 
 Tell the user the file path and suggest next steps:
 
 - **`/3d-websites:viewer`** — create an interactive viewer for the exported model
-- **`/3d-websites:scene`** — compose multiple exported models into a scene
+- **`/3d-websites:3d-scene`** — compose multiple exported models into a scene
 - **`/3d-websites:landing-page`** — build a page around the model
 - **`/3d-websites:configurator`** — build a product configurator with the model

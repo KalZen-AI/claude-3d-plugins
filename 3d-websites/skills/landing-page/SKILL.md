@@ -11,7 +11,7 @@ Build a full, deployable web page that combines 3D content with HTML/CSS layout 
 Ask the user:
 
 - **Page purpose** — product launch, portfolio piece, SaaS landing, personal brand?
-- **3D content** — existing model (path?) or need to generate one? (`/3d-websites:generate`)
+- **3D content** — existing model (path?) or need to generate one? (`/3d-websites:generate-3d`)
 - **Framework** — plain HTML, Next.js, Astro, or auto-detect from project?
 - **Sections needed** — hero, features, specs, testimonials, pricing, CTA?
 - **Brand** (optional) — primary color, font, tone of voice?
@@ -272,6 +272,6 @@ Suggest next steps:
 
 - **`/3d-websites:scroll-scene`** — upgrade to scroll-driven 3D interactions
 - **`/3d-websites:configurator`** — add product configuration to the page
-- **`/3d-websites:generate`** — create additional models for feature sections
+- **`/3d-websites:generate-3d`** — create additional models for feature sections
 
 See [examples.md](examples.md) for complete page templates.
