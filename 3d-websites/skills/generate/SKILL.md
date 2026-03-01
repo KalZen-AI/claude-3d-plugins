@@ -2,7 +2,7 @@
 description: Generate a web-optimized 3D model via UnrealizeX. Use when the user wants to create a 3D asset from a text description for use on a website.
 ---
 
-# 3d-websites generate
+# Generate 3D
 
 Generate a 3D model through the full UnrealizeX pipeline, optimized for web delivery.
 

@@ -2,7 +2,7 @@
 description: Compose multiple 3D models into an interactive scene with lighting, camera systems, and interaction. Use when the user wants to display several models together.
 ---
 
-# 3d-websites scene
+# 3D Scene
 
 Compose multiple models into a unified 3D scene with environment, lighting, camera systems, and user interaction.
 
