@@ -26,7 +26,7 @@ Architects, interior designers, and real estate professionals who need quick 3D 
 This plugin uses the **UnrealizeX** connector (`~~3d-generation`) for 3D model generation.
 
 - **Claude Code**: The connector is pre-configured in `.mcp.json`. The first time you use it, an OAuth login opens in your browser — sign in and you're connected.
-- **Claude Cowork**: Go to Settings → Connectors → Add custom connector → paste `https://unrealizex.com/mcp/` → authenticate.
+- **Claude Cowork**: Click Customize → Connectors → find **UnrealizeX** under web connectors → click **Connect** → authenticate.
 
 See [CONNECTORS.md](../CONNECTORS.md) for details.
 

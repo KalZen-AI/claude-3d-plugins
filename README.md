@@ -32,6 +32,30 @@ These plugins generate 3D models through [UnrealizeX](https://unrealizex.com). Y
 
 ## Getting Started
 
+### Claude Cowork
+
+**Step 1 — Add the marketplace:**
+
+1. Open the Claude desktop app and switch to the **Cowork** tab
+2. Click **Customize** in the left sidebar
+3. Click **Browse plugins** → **Personal**
+4. Click the **+** button and select **Add marketplace by URL**
+5. Paste the repository URL:
+   ```
+   https://github.com/KalZen-AI/claude-3d-plugins.git
+   ```
+6. Browse the marketplace and install the plugins you want
+
+**Step 2 — Connect to UnrealizeX:**
+
+1. Click **Customize** in the left sidebar
+2. Go to **Connectors**
+3. Find **UnrealizeX** under web connectors
+4. Click on **UnrealizeX**, then click **Connect**
+5. Authenticate with your UnrealizeX account (or [create a free one](https://unrealizex.com))
+
+> Run `/[plugin-name]:setup` after installing to walk through the full setup interactively.
+
 ### Claude Code
 
 **Step 1 — Add the marketplace:**
@@ -51,29 +75,6 @@ Or open the plugin manager with `/plugin`, go to the **Discover** tab, and insta
 **Step 3 — Connect to UnrealizeX:**
 
 The MCP server is pre-configured in the plugin's `.mcp.json` — no manual setup needed. The first time Claude calls an UnrealizeX tool, an OAuth login will open in your browser. Sign in (or create a free account) and you're connected.
-
-> Run `/[plugin-name]:setup` after installing to walk through the full setup interactively.
-
-### Claude Cowork
-
-**Step 1 — Add the marketplace:**
-
-1. Open the Claude desktop app and switch to the **Cowork** tab
-2. Click **Customize** in the left sidebar
-3. Click **Browse plugins** → **Personal**
-4. Click the **+** button and select **Add marketplace by URL**
-5. Paste the repository URL:
-   ```
-   https://github.com/KalZen-AI/claude-3d-plugins.git
-   ```
-6. Browse the marketplace and install the plugins you want
-
-**Step 2 — Connect to UnrealizeX:**
-
-1. Go to **Settings → Connectors**
-2. Click **Add custom connector**
-3. Paste the server URL: `https://unrealizex.com/mcp/`
-4. Authenticate with your UnrealizeX account (or [create a free one](https://unrealizex.com))
 
 > Run `/[plugin-name]:setup` after installing to walk through the full setup interactively.
 

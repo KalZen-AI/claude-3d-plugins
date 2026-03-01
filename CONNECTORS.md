@@ -21,7 +21,7 @@ Output formats include GLB, FBX, USD, and Blender-native files depending on the 
 | Environment | Setup |
 |-------------|-------|
 | **Claude Code** | Automatic — the `.mcp.json` in each plugin pre-configures the server. The first time Claude calls an UnrealizeX tool, an OAuth login opens in your browser. |
-| **Claude Cowork** | Manual — go to **Settings → Connectors → Add custom connector**, paste `https://unrealizex.com/mcp/`, and authenticate. |
+| **Claude Cowork** | Click **Customize → Connectors**, find **UnrealizeX** under web connectors, click it, then click **Connect** and authenticate. |
 
 **Authentication:**
 

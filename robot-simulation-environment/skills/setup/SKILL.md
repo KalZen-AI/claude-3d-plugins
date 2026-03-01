@@ -23,10 +23,11 @@ The MCP server is already pre-configured in the plugin's `.mcp.json` — no manu
 
 **Claude Cowork users:**
 
-1. Go to **Settings → Connectors**
-2. Click **Add custom connector**
-3. Paste the server URL: `https://unrealizex.com/mcp/`
-4. Authenticate with your UnrealizeX account
+1. Click **Customize** in the left sidebar
+2. Go to **Connectors**
+3. Find **UnrealizeX** under web connectors
+4. Click on **UnrealizeX**, then click **Connect**
+5. Authenticate with your UnrealizeX account
 
 If you don't have an account yet, create a free one at [unrealizex.com](https://unrealizex.com). You get free credits to start.
 
