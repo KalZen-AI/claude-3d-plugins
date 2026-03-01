@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Configurator</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --color-bg: #0a0a0a;
+      --color-surface: rgba(0, 0, 0, 0.75);
+      --color-text: #fafafa;
+      --color-text-muted: #888;
+      --color-border: rgba(255, 255, 255, 0.1);
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    #canvas-container {
+      position: absolute;
+      inset: 0;
+    }
+
+    /* --- Config Panel --- */
+    .config-panel {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--color-surface);
+      backdrop-filter: blur(16px);
+      padding: 1.5rem;
+      border-radius: 16px;
+      border: 1px solid var(--color-border);
+      min-width: 240px;
+      z-index: 10;
+    }
+
+    .config-section {
+      margin-bottom: 1.25rem;
+    }
+    .config-section:last-child { margin-bottom: 0; }
+
+    .config-section label {
+      display: block;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Part selector tabs */
+    .part-tabs {
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1.25rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 0.25rem;
+    }
+    .part-tab {
+      flex: 1;
+      padding: 0.4rem 0.5rem;
+      background: none;
+      border: none;
+      border-radius: 8px;
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .part-tab:hover { color: var(--color-text); }
+    .part-tab.active {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--color-text);
+    }
+
+    /* Color swatches */
+    .swatches {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .swatch {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .swatch:hover { transform: scale(1.15); }
+    .swatch.active { border-color: #fff; }
+
+    /* Material buttons */
+    .material-options { display: flex; flex-direction: column; gap: 0.375rem; }
+    .material-btn {
+      padding: 0.4rem 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      color: var(--color-text);
+      font-size: 0.75rem;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+      text-align: left;
+    }
+    .material-btn:hover { background: rgba(255, 255, 255, 0.08); }
+    .material-btn.active {
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Price bar */
+    .price-bar {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      background: var(--color-surface);
+      backdrop-filter: blur(16px);
+      padding: 1rem 2rem;
+      border-radius: 14px;
+      border: 1px solid var(--color-border);
+      z-index: 10;
+    }
+    .price {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .add-to-cart {
+      padding: 0.6rem 1.5rem;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .add-to-cart:hover { opacity: 0.85; }
+    .share-btn {
+      padding: 0.5rem;
+      background: none;
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      color: var(--color-text-muted);
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 640px) {
+      .config-panel {
+        right: 0.5rem;
+        left: 0.5rem;
+        top: auto;
+        bottom: 5rem;
+        transform: none;
+        min-width: auto;
+      }
+      .price-bar {
+        bottom: 0.5rem;
+        left: 0.5rem;
+        right: 0.5rem;
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div id="canvas-container" aria-label="Interactive 3D product configurator"></div>
+
+<!-- Config panel -->
+<div class="config-panel">
+  <div class="part-tabs">
+    <button class="part-tab active" data-part="upper">Upper</button>
+    <button class="part-tab" data-part="sole">Sole</button>
+    <button class="part-tab" data-part="laces">Laces</button>
+  </div>
+
+  <div class="config-section">
+    <label>Color</label>
+    <div class="swatches" id="color-swatches">
+      <button class="swatch active" data-color="#ffffff" style="background:#ffffff" aria-label="White"></button>
+      <button class="swatch" data-color="#111111" style="background:#111111" aria-label="Black"></button>
+      <button class="swatch" data-color="#2563eb" style="background:#2563eb" aria-label="Blue"></button>
+      <button class="swatch" data-color="#dc2626" style="background:#dc2626" aria-label="Red"></button>
+      <button class="swatch" data-color="#16a34a" style="background:#16a34a" aria-label="Green"></button>
+      <button class="swatch" data-color="#f59e0b" style="background:#f59e0b" aria-label="Amber"></button>
+    </div>
+  </div>
+
+  <div class="config-section">
+    <label>Material</label>
+    <div class="material-options" id="material-options">
+      <button class="material-btn active" data-material="matte">Matte</button>
+      <button class="material-btn" data-material="glossy">Glossy</button>
+      <button class="material-btn" data-material="metallic">Metallic</button>
+    </div>
+  </div>
+</div>
+
+<!-- Price bar -->
+<div class="price-bar">
+  <span class="price" id="price">$120</span>
+  <button class="add-to-cart">Add to Cart</button>
+  <button class="share-btn" id="share-btn" aria-label="Copy share link">Link</button>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+  // --- Material presets ---
+  const materialPresets = {
+    matte:    { roughness: 0.85, metalness: 0.0, clearcoat: 0, priceModifier: 0 },
+    glossy:   { roughness: 0.1,  metalness: 0.0, clearcoat: 0.8, priceModifier: 10 },
+    metallic: { roughness: 0.35, metalness: 0.95, clearcoat: 0, priceModifier: 25 },
+  };
+
+  const BASE_PRICE = 120;
+
+  // --- Config state ---
+  const config = {
+    upper: { color: '#ffffff', material: 'matte' },
+    sole:  { color: '#111111', material: 'matte' },
+    laces: { color: '#ffffff', material: 'matte' },
+  };
+
+  let activePart = 'upper';
+  let loadedModel = null;
+
+  // --- Three.js setup ---
+  const container = document.getElementById('canvas-container');
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0a0a);
+
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(2, 1.5, 2);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.target.set(0, 0.5, 0);
+
+  // Lighting — studio
+  scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5);
+  key.position.set(5, 5, 5);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.5);
+  fill.position.set(-3, 3, -3);
+  scene.add(fill);
+  const rim = new THREE.DirectionalLight(0xffffff, 0.8);
+  rim.position.set(0, 3, -5);
+  scene.add(rim);
+
+  // --- Load model ---
+  new GLTFLoader().load('models/shoe.glb', (gltf) => {
+    loadedModel = gltf.scene;
+    const box = new THREE.Box3().setFromObject(loadedModel);
+    const center = box.getCenter(new THREE.Vector3());
+    loadedModel.position.sub(center);
+    loadedModel.position.y += box.getSize(new THREE.Vector3()).y / 2;
+    scene.add(loadedModel);
+    applyConfig();
+  });
+
+  // --- Apply config to model ---
+  function applyConfig() {
+    if (!loadedModel) return;
+
+    loadedModel.traverse((child) => {
+      if (!child.isMesh || !child.name) return;
+
+      const partName = child.name.toLowerCase();
+      let partConfig = null;
+
+      for (const [key, val] of Object.entries(config)) {
+        if (partName.includes(key)) {
+          partConfig = val;
+          break;
+        }
+      }
+      if (!partConfig) return;
+
+      const preset = materialPresets[partConfig.material];
+      child.material = child.material.clone();
+      child.material.color.set(partConfig.color);
+      child.material.roughness = preset.roughness;
+      child.material.metalness = preset.metalness;
+      if (child.material.clearcoat !== undefined) {
+        child.material.clearcoat = preset.clearcoat;
+      }
+      child.material.needsUpdate = true;
+    });
+
+    updatePrice();
+  }
+
+  // --- Price ---
+  function updatePrice() {
+    let total = BASE_PRICE;
+    for (const props of Object.values(config)) {
+      total += materialPresets[props.material]?.priceModifier ?? 0;
+    }
+    document.getElementById('price').textContent = '$' + total;
+  }
+
+  // --- URL state ---
+  function saveToURL() {
+    const params = new URLSearchParams();
+    for (const [part, props] of Object.entries(config)) {
+      params.set(part, `${props.color},${props.material}`);
+    }
+    history.replaceState(null, '', '?' + params.toString());
+  }
+
+  function loadFromURL() {
+    const params = new URLSearchParams(location.search);
+    for (const [part, value] of params) {
+      if (config[part]) {
+        const [color, material] = value.split(',');
+        if (color) config[part].color = color;
+        if (material && materialPresets[material]) config[part].material = material;
+      }
+    }
+  }
+  loadFromURL();
+
+  // --- UI event handlers ---
+
+  // Part tabs
+  document.querySelectorAll('.part-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      document.querySelector('.part-tab.active').classList.remove('active');
+      tab.classList.add('active');
+      activePart = tab.dataset.part;
+      syncUI();
+    });
+  });
+
+  // Color swatches
+  document.getElementById('color-swatches').addEventListener('click', (e) => {
+    const swatch = e.target.closest('.swatch');
+    if (!swatch) return;
+    config[activePart].color = swatch.dataset.color;
+    applyConfig();
+    saveToURL();
+    syncUI();
+  });
+
+  // Material buttons
+  document.getElementById('material-options').addEventListener('click', (e) => {
+    const btn = e.target.closest('.material-btn');
+    if (!btn) return;
+    config[activePart].material = btn.dataset.material;
+    applyConfig();
+    saveToURL();
+    syncUI();
+  });
+
+  // Share button
+  document.getElementById('share-btn').addEventListener('click', () => {
+    navigator.clipboard.writeText(location.href);
+  });
+
+  // Sync UI to reflect current config state
+  function syncUI() {
+    const partConfig = config[activePart];
+
+    document.querySelectorAll('.swatch').forEach((s) => {
+      s.classList.toggle('active', s.dataset.color === partConfig.color);
+    });
+    document.querySelectorAll('.material-btn').forEach((b) => {
+      b.classList.toggle('active', b.dataset.material === partConfig.material);
+    });
+  }
+  syncUI();
+
+  // --- Resize ---
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // --- Animate ---
+  renderer.setAnimationLoop(() => {
+    controls.update();
+    renderer.render(scene, camera);
+  });
+</script>
+
+</body>
+</html>

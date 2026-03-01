@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scroll-Driven 3D Scene</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #0a0a0a;
+      color: #fafafa;
+    }
+
+    /* Fixed 3D canvas */
+    #scene-container {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* Scrollable content overlays the 3D */
+    #scroll-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .chapter {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5vw;
+      pointer-events: none;
+    }
+
+    .chapter-text {
+      max-width: 480px;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      border-radius: 12px;
+      color: #fafafa;
+      pointer-events: auto;
+    }
+
+    .chapter-text h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .chapter-text p {
+      color: #aaa;
+      line-height: 1.6;
+      font-size: 0.9375rem;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Fixed 3D canvas -->
+<div id="scene-container" aria-hidden="true"></div>
+
+<!-- Scrollable content -->
+<div id="scroll-content">
+  <section id="chapter-1" class="chapter">
+    <div class="chapter-text">
+      <h2>Chapter 1: Introduction</h2>
+      <p>As you scroll, the 3D model gently rotates to reveal its form. The camera stays in place while the model turns.</p>
+    </div>
+  </section>
+
+  <section id="chapter-2" class="chapter">
+    <div class="chapter-text">
+      <h2>Chapter 2: Details</h2>
+      <p>The camera zooms in to show fine details. The model continues rotating, giving you a closer look at the craftsmanship.</p>
+    </div>
+  </section>
+
+  <section id="chapter-3" class="chapter">
+    <div class="chapter-text">
+      <h2>Chapter 3: Overview</h2>
+      <p>The camera pulls back for a wide view. The full rotation completes, showing the product from every angle.</p>
+    </div>
+  </section>
+</div>
+
+<!-- Dependencies: Three.js via importmap, GSAP + ScrollTrigger + Lenis via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // --- Lenis smooth scroll ---
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+
+  lenis.on('scroll', ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+
+  // --- Three.js setup ---
+  const container = document.getElementById('scene-container');
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+  camera.position.set(0, 2, 5);
+
+  // Lighting
+  scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.5);
+  keyLight.position.set(5, 5, 5);
+  scene.add(keyLight);
+
+  // Resize
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  // --- Load model and set up scroll animations ---
+  const loader = new GLTFLoader();
+  loader.load('models/product.glb', (gltf) => {
+    const model = gltf.scene;
+    const box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.sub(center);
+    scene.add(model);
+
+    setupScrollAnimations(model);
+  });
+
+  function setupScrollAnimations(model) {
+    // Chapter 1: gentle rotation
+    gsap.to(model.rotation, {
+      y: Math.PI * 0.5,
+      scrollTrigger: {
+        trigger: '#chapter-1',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    });
+
+    // Chapter 2: zoom in + continue rotation
+    gsap.to(camera.position, {
+      z: 2.5,
+      y: 1,
+      scrollTrigger: {
+        trigger: '#chapter-2',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    });
+
+    gsap.to(model.rotation, {
+      y: Math.PI,
+      scrollTrigger: {
+        trigger: '#chapter-2',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    });
+
+    // Chapter 3: pull back to wide view
+    gsap.to(camera.position, {
+      z: 6,
+      y: 3,
+      scrollTrigger: {
+        trigger: '#chapter-3',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    });
+
+    gsap.to(model.rotation, {
+      y: Math.PI * 2,
+      scrollTrigger: {
+        trigger: '#chapter-3',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 1,
+      },
+    });
+  }
+
+  // --- Animation loop ---
+  renderer.setAnimationLoop(() => {
+    renderer.render(scene, camera);
+  });
+</script>
+
+</body>
+</html>

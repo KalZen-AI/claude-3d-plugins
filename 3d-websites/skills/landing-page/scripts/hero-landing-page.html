@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Name — Tagline</title>
+  <meta name="description" content="One-sentence product description for search engines.">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --color-primary: #2563eb;
+      --color-primary-hover: #1d4ed8;
+      --color-bg: #0a0a0a;
+      --color-surface: #141414;
+      --color-text: #fafafa;
+      --color-text-muted: #888;
+      --font: 'Inter', system-ui, -apple-system, sans-serif;
+      --space-section: clamp(4rem, 8vw, 8rem);
+      --max-width: 1200px;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* — Nav — */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10, 10, 10, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    nav .logo {
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: var(--color-text);
+      text-decoration: none;
+    }
+
+    nav .nav-cta {
+      padding: 0.5rem 1.25rem;
+      background: var(--color-primary);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    nav .nav-cta:hover { background: var(--color-primary-hover); }
+
+    /* — Hero — */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-3d {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-3d canvas {
+      width: 100% !important;
+      height: 100% !important;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      pointer-events: none;
+      max-width: 700px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+
+    .hero-content p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+    }
+
+    .hero-content .cta {
+      pointer-events: auto;
+      display: inline-block;
+      padding: 0.875rem 2rem;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .hero-content .cta:hover {
+      background: var(--color-primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* — Features — */
+    .features {
+      padding: var(--space-section) 2rem;
+    }
+
+    .features-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    .features h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: var(--color-surface);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-card p {
+      color: var(--color-text-muted);
+      font-size: 0.9375rem;
+    }
+
+    /* — CTA Section — */
+    .cta-section {
+      padding: var(--space-section) 2rem;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.125rem;
+    }
+
+    .cta-section .cta {
+      display: inline-block;
+      padding: 0.875rem 2.5rem;
+      background: var(--color-primary);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .cta-section .cta:hover { background: var(--color-primary-hover); }
+
+    /* — Footer — */
+    footer {
+      padding: 2rem;
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.8125rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* — Reduced motion — */
+    @media (prefers-reduced-motion: reduce) {
+      .hero-3d { display: none; }
+      .hero { background: var(--color-surface); }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">ProductName</a>
+  <a href="#cta" class="nav-cta">Get Started</a>
+</nav>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="hero-3d" id="hero-3d" aria-hidden="true"></div>
+    <div class="hero-content">
+      <h1>Your Product Headline</h1>
+      <p>A concise description of what makes your product special.</p>
+      <a href="#cta" class="cta">Get Started</a>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="features-inner">
+      <h2>Features</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <h3>Feature One</h3>
+          <p>Brief description of this feature and why it matters to your users.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Feature Two</h3>
+          <p>Brief description of this feature and why it matters to your users.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Feature Three</h3>
+          <p>Brief description of this feature and why it matters to your users.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section" id="cta">
+    <h2>Ready to get started?</h2>
+    <p>Start building with your 3D product today.</p>
+    <a href="#" class="cta">Sign Up Free</a>
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2026 ProductName. All rights reserved.</p>
+</footer>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170/examples/jsm/"
+  }
+}
+</script>
+<script type="module">
+  import * as THREE from 'three';
+  import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+  import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+  const container = document.getElementById('hero-3d');
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  container.appendChild(renderer.domElement);
+
+  const scene = new THREE.Scene();
+
+  const camera = new THREE.PerspectiveCamera(
+    45, container.clientWidth / container.clientHeight, 0.1, 100
+  );
+  camera.position.set(0, 1, 4);
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.enableZoom = false; // Prevent accidental zoom on landing page
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 0.8;
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    controls.autoRotate = false;
+  }
+
+  // Lighting — studio preset
+  scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+  const key = new THREE.DirectionalLight(0xffffff, 1.5);
+  key.position.set(5, 5, 5);
+  scene.add(key);
+  const fill = new THREE.DirectionalLight(0xffffff, 0.5);
+  fill.position.set(-3, 3, -3);
+  scene.add(fill);
+
+  // Load model
+  const loader = new GLTFLoader();
+  loader.load('models/product.glb', (gltf) => {
+    const model = gltf.scene;
+    scene.add(model);
+
+    // Auto-fit
+    const box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    model.position.sub(center);
+  });
+
+  // Resize
+  const ro = new ResizeObserver(() => {
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
+  });
+  ro.observe(container);
+
+  // Animate
+  renderer.setAnimationLoop(() => {
+    controls.update();
+    renderer.render(scene, camera);
+  });
+</script>
+
+<noscript>
+  <style>.hero-3d { display: none; } .hero { background: #141414; }</style>
+</noscript>
+
+</body>
+</html>
