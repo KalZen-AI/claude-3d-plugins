@@ -1,0 +1,6 @@
+{
+  "name": "robot-simulation-environment",
+  "version": "0.1.0",
+  "description": "Generate 3D environments for robotic simulation — create workspace props, export to Blender/OpenUSD, and prepare scenes for Isaac Lab.",
+  "author": { "name": "Ashrya" }
+}
