@@ -1,0 +1,33 @@
+{
+  "name": "claude-3D-plugins",
+  "owner": {
+    "name": "UnrealizeX"
+  },
+  "plugins": [
+    {
+      "name": "3d-websites",
+      "source": "./3d-websites",
+      "description": "Build interactive 3D web experiences — landing pages, product showcases, and portfolio sites powered by Three.js and AI-generated 3D models."
+    },
+    {
+      "name": "product-studio",
+      "source": "./product-studio",
+      "description": "Virtual product photography and prototyping — generate photorealistic 3D mockups, explore colorways, and render turntable shots without a physical studio."
+    },
+    {
+      "name": "game-assets",
+      "source": "./game-assets",
+      "description": "Game-ready 3D content pipeline — batch-generate props, characters, and environment pieces with automatic LOD levels and optimized topology."
+    },
+    {
+      "name": "interior-design",
+      "source": "./interior-design",
+      "description": "3D interior design — generate furniture, decor, and fixtures, then compose them into room visualizations for architects and designers."
+    },
+    {
+      "name": "robot-simulation-environment",
+      "source": "./robot-simulation-environment",
+      "description": "Generate 3D environments for robotic simulation — create workspace props, export to Blender/OpenUSD, and prepare scenes for Isaac Lab."
+    }
+  ]
+}

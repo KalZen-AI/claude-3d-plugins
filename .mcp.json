@@ -1,0 +1,8 @@
+{
+    "mcpServers": {
+        "unrealizex": {
+            "type": "http",
+            "url": "https://unrealizex.com/mcp/"
+          }
+    }
+}
