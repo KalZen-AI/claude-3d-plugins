@@ -1,0 +1,6 @@
+{
+  "name": "interior-design",
+  "version": "0.1.0",
+  "description": "3D interior design — generate furniture, decor, and fixtures, then compose them into room visualizations for architects and designers.",
+  "author": { "name": "Ashrya" }
+}
